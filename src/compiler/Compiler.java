@@ -46,12 +46,7 @@ public class Compiler {
     }
 
     private String getFileName() {
-        String line = inputFile.get();
-        currentLine++;
-        while (line.equals("")) {
-            line = inputFile.get();
-            currentLine++;
-        }
+        String line = getUntilActualCode();
         checkHeaderSyntax(line);
         return line.substring(5, line.length() - 5).trim();
     }
@@ -63,7 +58,7 @@ public class Compiler {
             if (lineIndex >= 5) {
                 break;
             }
-            if (line.charAt(lineIndex) != '#') {
+            if (line.charAt(lineIndex) != '=') {
                 syntaxErrors.add(new SyntaxError(currentLine, "Invalid header line", line, lineIndex));
                 return;
             }
@@ -75,7 +70,7 @@ public class Compiler {
             if (lineIndex < line.length() - 5) {
                 break;
             }
-            if (line.charAt(lineIndex) != '#') {
+            if (line.charAt(lineIndex) != '=') {
                 syntaxErrors.add(new SyntaxError(currentLine, "Invalid header line", line, lineIndex));
                 return;
             }
@@ -92,6 +87,28 @@ public class Compiler {
 
     public AppFile getOutputFile() {
         return this.outputFile;
+    }
+
+    private String getUntilActualCode() {
+        String output = inputFile.get();
+        currentLine++;
+        while (isCommentOrEmpty(output)) {
+            output = inputFile.get();
+            currentLine++;
+        }
+        return output;
+    }
+
+    private boolean isCommentOrEmpty(String line) {
+        for (int i = 0; i < line.length(); ++i) {
+            if (line.charAt(i) == '#') {
+                return true;
+            }
+            if (line.charAt(i) != ' ') {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

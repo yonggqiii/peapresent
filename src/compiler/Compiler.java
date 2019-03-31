@@ -110,8 +110,8 @@ public class Compiler {
 
     /**
      * Parses and returns the title of the presentation within the input file.
-     * @throws  IndexOutOfBoundsException If reached EOF before finding line.
      * @return  The title of the presentation.
+     * @throws  IndexOutOfBoundsException If reached EOF before finding line.
      */
     private String getFileName() throws IndexOutOfBoundsException {
 
@@ -119,7 +119,7 @@ public class Compiler {
         currentLine = line.getOneBasedLineNumber();
 
         Optional<ArrayList<SyntaxError>> errors = SyntaxChecker
-                .checkSyntax(CodeType.HEADER, line);
+            .checkSyntax(CodeType.HEADER, line);
         if (errors.isPresent()) {
             for (SyntaxError e : errors.get()) {
                 syntaxErrors.add(e);

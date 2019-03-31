@@ -37,7 +37,12 @@ public final class App {
     private static AppFile inputFile;
     private static AppFile outputFile;
 
-    public static void main(String args[]) throws IOException {
+    /**
+     * Driver method.
+     * @param  args        List of arguments entered by the user.
+     * @throws IOException If something goes wrong with file I/O/
+     */
+    public static void main(String[] args) throws IOException {
 
         // Checks if user enters help flag.
         if (args.length > 0 && helpFlags.contains(args[0])) {

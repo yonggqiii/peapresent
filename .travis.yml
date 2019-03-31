@@ -4,6 +4,6 @@ matrix:
     -jdk: oraclejdk9
 
 script: >-
-  cd ./config
-  ./buildtest.sh
+  cd ./config &&
+  ./buildtest.sh &&
   ./checkstyle.sh

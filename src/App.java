@@ -1,31 +1,41 @@
-import java.io.FileNotFoundException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import filehandler.AppFile;
 import compiler.Compiler;
+import filehandler.AppFile;
 
 /**
  * App class is the entry point of the program and handles arguments and errors.
  * 
  * @author yonggqiii
  */
-public class App {
+public final class App {
 
-    static BufferedReader bf;
-    static BufferedWriter bw;
-    static AppFile inputFile;
-    static AppFile outputFile;
-    public static final String RUN_ERROR_NOT_ENOUGH_ARGUMENTS = "peapresent:" + " missing operands\n"
+    private static ArrayList<String> helpFlags = new ArrayList<>(
+            Arrays.asList(new String[] { "--help", "--HELP" }));
+
+    private static final String DEFAULT_FILE_EXTENSION = ".pp";
+
+    private static final String RUN_ERROR_NOT_ENOUGH_ARGUMENTS = "peapresent:"
+            + " missing operands\n"
             + "Try 'peapresent --help' for more information.";
-    public static final String RUN_ERROR_TOO_MANY_ARGUMENTS = "peapresent:" + " redundant arguments";
-    public static ArrayList<String> helpFlags = new ArrayList<>(Arrays.asList(new String[] { "--help", "--HELP" }));
-    public static final String DEFAULT_FILE_EXTENSION = ".peapresent";
+
+    private static final String RUN_ERROR_TOO_MANY_ARGUMENTS = "peapresent:"
+            + " redundant arguments";
+
+    private static final String RUN_ERROR_NOTHING_TO_COMPILE = "peapresent:"
+            + " input file is empty.";
+
+    private static BufferedReader bf;
+    private static BufferedWriter bw;
+    private static AppFile inputFile;
+    private static AppFile outputFile;
 
     public static void main(String args[]) throws IOException {
 
@@ -49,10 +59,11 @@ public class App {
             if (args.length < 2) {
                 throw new ArrayIndexOutOfBoundsException();
             }
-            readFile(args[0]);
+            readInputFile(args[0]);
         } catch (FileNotFoundException e) {
-            System.err
-                    .println("File " + args[0] + " cannot be found.\nEnsure that file contains .peapresent extension.");
+            System.err.println("File " + args[0]
+                    + " cannot be found.\nEnsure that file contains "
+                    + DEFAULT_FILE_EXTENSION + " extension.");
             return;
         } catch (ArrayIndexOutOfBoundsException e) {
             System.err.println(RUN_ERROR_NOT_ENOUGH_ARGUMENTS);
@@ -63,28 +74,38 @@ public class App {
             }
         }
 
-        Compiler c = new Compiler();
-        c.compile(inputFile);
+        // Begin compiation process.
+        Compiler c = new Compiler(inputFile);
+        c.compile();
+
+        // Do not write file if input has syntax errors.
         if (c.hasSyntaxErrors()) {
             c.printSyntaxErrors();
             return;
         }
+
+        if (c.isFileEmpty()) {
+            System.err.println(RUN_ERROR_NOTHING_TO_COMPILE);
+            return;
+        }
+
+        // If compilation succeeds with no syntax errors, write the output file.
         outputFile = c.getOutputFile();
         bw = new BufferedWriter(new FileWriter(args[1] + ".html"));
         bw.write(outputFile.toString());
         bw.close();
 
-        return;
     }
 
     /**
-     * Reads a file given the file name.
+     * Reads the input file given the file name.
      * 
-     * @param args The name of the file.
-     * @throws FileNotFoundException If the file cannot be found.
-     * @throws IOException           Other reasons.
+     * @param args                      The name of the file.
+     * @throws FileNotFoundException    If the file cannot be found.
+     * @throws IOException              Other reasons.
      */
-    private static void readFile(String args) throws FileNotFoundException, IOException {
+    private static void readInputFile(String args)
+            throws FileNotFoundException, IOException {
 
         bf = new BufferedReader(new FileReader(args + DEFAULT_FILE_EXTENSION));
         ArrayList<String> fileContents = new ArrayList<>();

@@ -1,5 +1,5 @@
 ret=0
-cd ../build/
+cd ./build/
 if ! ./build.sh; then
     ret=1
 fi

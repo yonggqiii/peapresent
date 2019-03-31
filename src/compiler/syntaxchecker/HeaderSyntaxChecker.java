@@ -23,6 +23,7 @@ class HeaderSyntaxChecker extends SyntaxChecker {
 
         Line line = lines[0];
         int colIndex = 1;
+        int numberOfEquals = 0;
         ArrayList<SyntaxError> errors = new ArrayList<>();
 
         try {
@@ -36,7 +37,7 @@ class HeaderSyntaxChecker extends SyntaxChecker {
 
             // Check if there are five successive = characters.
             while (true) {
-                if (colIndex > 5) {
+                if (numberOfEquals >= 5) {
                     break;
                 }
                 if (line.charAt(colIndex) != '=') {
@@ -44,6 +45,7 @@ class HeaderSyntaxChecker extends SyntaxChecker {
 
                 }
                 colIndex++;
+                numberOfEquals++;
             }
         } catch (Exception e) {
             errors.add(new SyntaxError("First line must be valid header line",

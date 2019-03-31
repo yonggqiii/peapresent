@@ -15,7 +15,7 @@ import filehandler.AppFile;
  * 
  * @author yonggqiii
  */
-public final class App{
+public final class App {
 
     private static ArrayList<String> helpFlags = new ArrayList<>(
             Arrays.asList(new String[] { "--help", "--HELP" }));

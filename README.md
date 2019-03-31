@@ -12,10 +12,10 @@ Text editors are easy to use, and can make it easy to define global settings for
 By storing your presentation files in text, it makes it easier to collaborate in groups without facing compatibility issues. Imagine working on your presentation as a group on GitHub!
 
 ## How do I use peapresent?
-Check out our [User Guide](https://github.com/yonggqiii/peapresent/docs/UserGuide.md) to get started on peapresent!
+Check out our [User Guide](docs/UserGuide.md) to get started on peapresent!
 
 ## How can I contribute?
-If you're a developer and would like to contribute, see our [Developer Guide](https://github.com/yonggqiii/peapresent/docs/DeveloperGuide.md) to see how you can get started on contributing to the code base.
+If you're a developer and would like to contribute, see our [Developer Guide](docs/DeveloperGuide.md) to see how you can get started on contributing to the code base.
 
 If you've been using peapresent and faced any issues, submit an issue to this repository and we'll check it out!
 

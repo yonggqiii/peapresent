@@ -19,5 +19,8 @@ If you're a developer and would like to contribute, see our [Developer Guide](do
 
 If you've been using peapresent and faced any issues, submit an issue to this repository and we'll check it out!
 
+## License
+peapresent is effectively under GPL v3.
+
 ## Contact
 You can contact the repository owner at yongqifoo@gmail.com

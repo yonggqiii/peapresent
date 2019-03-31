@@ -1,0 +1,7 @@
+language: java
+matrix:
+  include:
+    -jdk: oraclejdk9
+
+script: >-
+  ./build/build.sh

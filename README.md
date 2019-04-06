@@ -1,4 +1,4 @@
-# peapresent ![Build Status](https://travis-ci.com/yonggqiii/peapresent.svg?branch=master)
+# peapresent ![Build Status](https://travis-ci.com/yonggqiii/peapresent.svg?branch=master)[![Build status](https://ci.appveyor.com/api/projects/status/950buwbis0omtyyr?svg=true)](https://ci.appveyor.com/project/yonggqiii/peapresent)
 peapresent aims to be a program that compiles text in a specific format into a presentation in html format.
 
 ## Why html?

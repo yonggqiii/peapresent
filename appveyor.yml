@@ -1,2 +1,5 @@
 build_script:
     mvn package
+
+cache:
+    - C:\Users\appveyor\.mvn

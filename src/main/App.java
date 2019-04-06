@@ -40,7 +40,7 @@ public final class App {
     /**
      * Driver method.
      * @param  args        List of arguments entered by the user.
-     * @throws IOException If something goes wrong with file I/O/
+     * @throws IOException If something goes wrong with file I/O.
      */
     public static void main(String[] args) throws IOException {
 

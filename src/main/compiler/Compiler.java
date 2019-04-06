@@ -1,5 +1,7 @@
 package compiler;
 
+import static compiler.syntaxchecker.HeaderSyntaxChecker.NUMBER_OF_LEADING_EQUALS;
+
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
@@ -12,6 +14,10 @@ import compiler.syntaxchecker.CodeType;
 import compiler.syntaxchecker.SyntaxChecker;
 import compiler.styles.Style;
 
+/**
+ * Compiles input file into a presentation.
+ * @author yonggqiii
+ */
 public class Compiler {
 
     private int currentLine;
@@ -22,6 +28,7 @@ public class Compiler {
 
     /**
      * Creates a new compiler.
+     * @param inputFile The file that the user wants to compile.
      */
     public Compiler(AppFile inputFile) {
 
@@ -53,7 +60,8 @@ public class Compiler {
 
     /**
      * Checks if the input file has syntax errors.
-     * @return  True if the input file contains syntax errors.
+     * 
+     * @return True if the input file contains syntax errors.
      */
     public boolean hasSyntaxErrors() {
         return syntaxErrors.size() > 0;
@@ -61,7 +69,8 @@ public class Compiler {
 
     /**
      * Checks if the output file is empty.
-     * @return  True if the output file is empty, false otherwise.
+     * 
+     * @return True if the output file is empty, false otherwise.
      */
     public boolean isFileEmpty() {
         return outputFile.isEmpty();
@@ -79,7 +88,8 @@ public class Compiler {
 
     /**
      * Retrieves the compiled output.
-     * @return  The compiled output file.
+     * 
+     * @return The compiled output file.
      */
     public AppFile getOutputFile() {
         return this.outputFile;
@@ -87,7 +97,8 @@ public class Compiler {
 
     /**
      * Appends the standard HTML header and the file title.
-     * @param title     The title of the output file.
+     * 
+     * @param title The title of the output file.
      */
     private void appendHTMLHeader(String title) {
 
@@ -110,23 +121,25 @@ public class Compiler {
 
     /**
      * Parses and returns the title of the presentation within the input file.
-     * @return  The title of the presentation.
-     * @throws  IndexOutOfBoundsException If reached EOF before finding line.
+     * 
+     * @return The title of the presentation.
+     * @throws IndexOutOfBoundsException If reached EOF before finding line.
      */
     private String getFileName() throws IndexOutOfBoundsException {
 
         Line line = inputFile.getUntilActualCode(currentLine);
         currentLine = line.getOneBasedLineNumber();
 
-        Optional<ArrayList<SyntaxError>> errors = SyntaxChecker
-                .checkSyntax(CodeType.HEADER, line);
+        Optional<ArrayList<SyntaxError>> errors =
+                SyntaxChecker.checkSyntax(CodeType.HEADER, line);
         if (errors.isPresent()) {
             for (SyntaxError e : errors.get()) {
                 syntaxErrors.add(e);
             }
         }
 
-        return line.toString().trim().substring(5).trim();
+        return line.toString().trim().substring(NUMBER_OF_LEADING_EQUALS)
+                .trim();
 
     }
 

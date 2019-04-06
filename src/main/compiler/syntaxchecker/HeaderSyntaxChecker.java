@@ -10,7 +10,9 @@ import filehandler.Line;
  * HeaderSyntaxChecker checks if a line is a valid header line.
  * @author yonggqiii
  */
-class HeaderSyntaxChecker extends SyntaxChecker {
+public class HeaderSyntaxChecker extends SyntaxChecker {
+
+    public static final int NUMBER_OF_LEADING_EQUALS = 5;
 
     /*
      * The first line of code must be a header. A valid header is preceded by
@@ -37,7 +39,7 @@ class HeaderSyntaxChecker extends SyntaxChecker {
 
             // Check if there are five successive = characters.
             while (true) {
-                if (numberOfEquals >= 5) {
+                if (numberOfEquals >= NUMBER_OF_LEADING_EQUALS) {
                     break;
                 }
                 if (line.charAt(colIndex) != '=') {

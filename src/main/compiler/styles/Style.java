@@ -12,11 +12,11 @@ import java.util.Arrays;
  */
 public class Style {
 
-    List<String> tags;
-    Map<String, String> attributes;
+    private List<String> tags;
+    private Map<String, String> attributes;
 
-    private static ArrayList<String> VALID_ATTRIBUTE_NAMES = new ArrayList<>(
-            Arrays.asList(new String[] { "font", "font-size" }));
+    private static final ArrayList<String> VALID_ATTRIBUTE_NAMES =
+            new ArrayList<>(Arrays.asList(new String[] {"font", "font-size"}));
 
     /**
      * Constructs a new Style.
@@ -52,7 +52,7 @@ public class Style {
         if (!VALID_ATTRIBUTE_NAMES.contains(attributeName)) {
             throw new IllegalArgumentException();
         }
-        
+
     }
 
 }

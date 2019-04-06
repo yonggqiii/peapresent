@@ -17,25 +17,31 @@ import filehandler.AppFile;
  */
 public final class App {
 
-    private static ArrayList<String> helpFlags = new ArrayList<>(
-            Arrays.asList(new String[] { "--help", "--HELP" }));
+    private static ArrayList<String> helpFlags =
+            new ArrayList<>(Arrays.asList(new String[] {"--help", "--HELP"}));
 
     private static final String DEFAULT_FILE_EXTENSION = ".pp";
 
-    private static final String RUN_ERROR_NOT_ENOUGH_ARGUMENTS = "peapresent:"
-            + " missing operands\n"
-            + "Try 'peapresent --help' for more information.";
+    private static final String RUN_ERROR_NOT_ENOUGH_ARGUMENTS =
+            "peapresent:" + " missing operands\n"
+                    + "Try 'peapresent --help' for more information.";
 
-    private static final String RUN_ERROR_TOO_MANY_ARGUMENTS = "peapresent:"
-            + " redundant arguments";
+    private static final String RUN_ERROR_TOO_MANY_ARGUMENTS =
+            "peapresent:" + " redundant arguments";
 
-    private static final String RUN_ERROR_NOTHING_TO_COMPILE = "peapresent:"
-            + " input file is empty.";
+    private static final String RUN_ERROR_NOTHING_TO_COMPILE =
+            "peapresent:" + " input file is empty.";
 
     private static BufferedReader bf;
     private static BufferedWriter bw;
     private static AppFile inputFile;
     private static AppFile outputFile;
+
+    /**
+     * App constructor is hidden.
+     */
+    private App() {
+    }
 
     /**
      * Driver method.

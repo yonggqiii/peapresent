@@ -1,4 +1,4 @@
-# peapresent ![Build Status](https://travis-ci.com/yonggqiii/peapresent.svg?branch=master)[![Build status](https://ci.appveyor.com/api/projects/status/950buwbis0omtyyr?svg=true)](https://ci.appveyor.com/project/yonggqiii/peapresent)
+# peapresent ![Build Status](https://travis-ci.com/yonggqiii/peapresent.svg?branch=master)[![Build status](https://ci.appveyor.com/api/projects/status/950buwbis0omtyyr?svg=true)](https://ci.appveyor.com/project/yonggqiii/peapresent)[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e3cce65c33974d4d961202c1cb7ab858)](https://www.codacy.com/app/yonggqiii/peapresent?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=yonggqiii/peapresent&amp;utm_campaign=Badge_Grade)
 peapresent aims to be a program that compiles text in a specific format into a presentation in html format.
 
 ## Why html?

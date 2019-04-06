@@ -12,10 +12,6 @@ else
     jar cvfe $NAME.jar App @classsources.txt
     find . -name '*.class' -exec rm -f {} \;
     rm classsources.txt
-    cat ../build/run.sh $NAME.jar > $NAME
-    chmod +x $NAME
-    rm $NAME.jar
-    sudo mv $NAME /usr/bin
 fi
 rm javasources.txt
 cd ../build

@@ -14,11 +14,11 @@ import compiler.styles.Style;
 
 public class Compiler {
 
-    int currentLine;
-    final AppFile inputFile;
-    final AppFile outputFile;
-    final ArrayList<SyntaxError> syntaxErrors;
-    final Set<Style> styles = new HashSet<>();
+    private int currentLine;
+    private final AppFile inputFile;
+    private final AppFile outputFile;
+    private final ArrayList<SyntaxError> syntaxErrors;
+    private final Set<Style> styles = new HashSet<>();
 
     /**
      * Creates a new compiler.
@@ -119,7 +119,7 @@ public class Compiler {
         currentLine = line.getOneBasedLineNumber();
 
         Optional<ArrayList<SyntaxError>> errors = SyntaxChecker
-            .checkSyntax(CodeType.HEADER, line);
+                .checkSyntax(CodeType.HEADER, line);
         if (errors.isPresent()) {
             for (SyntaxError e : errors.get()) {
                 syntaxErrors.add(e);

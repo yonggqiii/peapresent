@@ -17,7 +17,7 @@ import filehandler.AppFile;
  */
 public final class App {
 
-    private static ArrayList<String> helpFlags =
+    private static final ArrayList<String> HELP_FLAGS =
             new ArrayList<>(Arrays.asList(new String[] {"--help", "--HELP"}));
 
     private static final String DEFAULT_FILE_EXTENSION = ".pp";
@@ -34,6 +34,7 @@ public final class App {
 
     private static BufferedReader bf;
     private static BufferedWriter bw;
+    private static Compiler c;
     private static AppFile inputFile;
     private static AppFile outputFile;
 
@@ -44,19 +45,47 @@ public final class App {
     }
 
     /**
-     * Driver method.
+     * Starts the application, terminates upon receiving an exception.
+     * 
      * @param  args        List of arguments entered by the user.
-     * @throws IOException If something goes wrong with file I/O.
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
-        // Checks if user enters help flag.
-        if (args.length > 0 && helpFlags.contains(args[0])) {
-            showHelp();
+        try {
+            checkIfAskedForHelp(args);
+            checkIfTooManyArguments(args);
+            readFile(args);
+            compile();
+            checkForCompilationErrors();
+            writeOutputFile(args);
+        } catch (RuntimeException | IOException e) {
             return;
         }
 
-        // Prompts user if too many arguments were entered.
+    }
+
+    /**
+     * Checks if the args passed into the application contains any help flags.
+     * 
+     * @param  args             The arguments passed in.
+     * @throws RuntimeException If the user passed in a help flag.
+     */
+    private static void checkIfAskedForHelp(String[] args)
+            throws RuntimeException {
+        if (args.length > 0 && HELP_FLAGS.contains(args[0])) {
+            showHelp();
+            throw new RuntimeException();
+        }
+        return;
+    }
+
+    /**
+     * Checks if there are too many arguments passed in to the application, and
+     * prints the extra arguments.
+     * 
+     * @param args The arguments passed in.
+     */
+    private static void checkIfTooManyArguments(String[] args) {
         if (args.length > 2) {
             System.err.print(RUN_ERROR_TOO_MANY_ARGUMENTS);
             for (int i = 2; i < args.length; ++i) {
@@ -64,8 +93,15 @@ public final class App {
             }
             System.err.println();
         }
+    }
 
-        // Read the input file.
+    /**
+     * Reads the file in the user's desktop and stores it as an {@link AppFile}.
+     * 
+     * @param  args         The arguments where the input file will be in.
+     * @throws IOException  If there is something wrong with file input;
+     */
+    private static void readFile(String[] args) throws IOException {
         try {
             if (args.length < 2) {
                 throw new ArrayIndexOutOfBoundsException();
@@ -84,27 +120,6 @@ public final class App {
                 bf.close();
             }
         }
-
-        // Begin compiation process.
-        Compiler c = new Compiler(inputFile);
-        c.compile();
-
-        // Do not write file if input has syntax errors.
-        if (c.hasSyntaxErrors()) {
-            c.printSyntaxErrors();
-            return;
-        }
-
-        if (c.isFileEmpty()) {
-            System.err.println(RUN_ERROR_NOTHING_TO_COMPILE);
-            return;
-        }
-
-        // If compilation succeeds with no syntax errors, write the output file.
-        outputFile = c.getOutputFile();
-        bw = new BufferedWriter(new FileWriter(args[1] + ".html"));
-        bw.write(outputFile.toString());
-        bw.close();
 
     }
 
@@ -131,6 +146,51 @@ public final class App {
 
         inputFile = new AppFile(fileContents);
         bf.close();
+
+    }
+
+    /**
+     * Compiles the input file into the output file if possible.
+     */
+    private static void compile() {
+
+        Compiler c = new Compiler(inputFile);
+        c.compile();
+
+    }
+
+    /**
+     * Checks for and prints any compilation errors collected by the
+     * {@link Compiler}.
+     * 
+     * @throws RuntimeException If there are compilation errors.
+     */
+    private static void checkForCompilationErrors() throws RuntimeException {
+
+        if (c.hasSyntaxErrors()) {
+            c.printSyntaxErrors();
+            throw new RuntimeException();
+        }
+
+        if (c.isFileEmpty()) {
+            System.err.println(RUN_ERROR_NOTHING_TO_COMPILE);
+            throw new RuntimeException();
+        }
+
+    }
+
+    /**
+     * Writes the output file on the user's computer.
+     * 
+     * @param  args         The arguments passed in by the user.         
+     * @throws IOException  If there is an issue with file output.
+     */
+    private static void writeOutputFile(String[] args) throws IOException {
+
+        outputFile = c.getOutputFile();
+        bw = new BufferedWriter(new FileWriter(args[1] + ".html"));
+        bw.write(outputFile.toString());
+        bw.close();
 
     }
 

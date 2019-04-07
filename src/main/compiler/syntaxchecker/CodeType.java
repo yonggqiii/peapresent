@@ -5,5 +5,5 @@ package compiler.syntaxchecker;
  * @author yonggqiii
  */
 public enum CodeType {
-    HEADER;
+    HEADER, STYLE;
 }

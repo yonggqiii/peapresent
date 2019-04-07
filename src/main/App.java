@@ -58,7 +58,7 @@ public final class App {
             compile();
             checkForCompilationErrors();
             writeOutputFile(args);
-        } catch (RuntimeException | IOException e) {
+        } catch (IOException e) {
             return;
         }
 
@@ -68,13 +68,12 @@ public final class App {
      * Checks if the args passed into the application contains any help flags.
      * 
      * @param  args             The arguments passed in.
-     * @throws RuntimeException If the user passed in a help flag.
+     * @throws IOException If the user passed in a help flag.
      */
-    private static void checkIfAskedForHelp(String[] args)
-            throws RuntimeException {
+    private static void checkIfAskedForHelp(String[] args) throws IOException {
         if (args.length > 0 && HELP_FLAGS.contains(args[0])) {
             showHelp();
-            throw new RuntimeException();
+            throw new IOException();
         }
         return;
     }
@@ -111,10 +110,10 @@ public final class App {
             System.err.println("File " + args[0]
                     + " cannot be found.\nEnsure that file contains "
                     + DEFAULT_FILE_EXTENSION + " extension.");
-            return;
+            throw new IOException();
         } catch (ArrayIndexOutOfBoundsException e) {
             System.err.println(RUN_ERROR_NOT_ENOUGH_ARGUMENTS);
-            return;
+            throw new IOException();
         } finally {
             if (bf != null) {
                 bf.close();
@@ -154,7 +153,7 @@ public final class App {
      */
     private static void compile() {
 
-        Compiler c = new Compiler(inputFile);
+        c = new Compiler(inputFile);
         c.compile();
 
     }
@@ -163,18 +162,17 @@ public final class App {
      * Checks for and prints any compilation errors collected by the
      * {@link Compiler}.
      * 
-     * @throws RuntimeException If there are compilation errors.
+     * @throws IOException If there are compilation errors.
      */
-    private static void checkForCompilationErrors() throws RuntimeException {
-
+    private static void checkForCompilationErrors() throws IOException {
         if (c.hasSyntaxErrors()) {
             c.printSyntaxErrors();
-            throw new RuntimeException();
+            throw new IOException();
         }
 
         if (c.isFileEmpty()) {
             System.err.println(RUN_ERROR_NOTHING_TO_COMPILE);
-            throw new RuntimeException();
+            throw new IOException();
         }
 
     }

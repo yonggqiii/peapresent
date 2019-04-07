@@ -10,7 +10,7 @@ import filehandler.Line;
  * HeaderSyntaxChecker checks if a line is a valid header line.
  * @author yonggqiii
  */
-public class HeaderSyntaxChecker extends SyntaxChecker {
+public final class HeaderSyntaxChecker extends SyntaxChecker {
 
     public static final int NUMBER_OF_LEADING_EQUALS = 5;
 

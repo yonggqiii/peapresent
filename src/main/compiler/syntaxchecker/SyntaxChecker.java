@@ -27,6 +27,9 @@ public abstract class SyntaxChecker {
             case HEADER:
                 sc = new HeaderSyntaxChecker();
                 break;
+            case STYLE:
+                sc = new StyleSyntaxChecker();
+                break;
             default:
                 // Temporary.
                 sc = new HeaderSyntaxChecker();

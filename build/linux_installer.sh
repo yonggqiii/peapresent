@@ -1,4 +1,3 @@
-cd ../
 mvn package
 cat ./build/run.sh ./target/peapresent.jar > peapresent
 chmod +x peapresent
